@@ -25,12 +25,15 @@ gulp.task('sass', function () {
 gulp.task('libs', function () {
     gulp.src([
         'core-js/client/shim.min.js',
+        'core-js/client/shim.min.js.map',
         'zone.js/dist/zone.js',
         'reflect-metadata/Reflect.js',
+        'reflect-metadata/Reflect.js.map',
         'systemjs/dist/system.src.js',
-        'rxjs/bundles/Rx.js',
         'rxjs/**/*.js',
-        '@angular/**/*.js'
+        'rxjs/**/*.js.map',
+        '@angular/**/*.js',
+        '@angular/**/*.js.map'
     ], { cwd: "node_modules/**" })
         .pipe(gulp.dest("./public/app/libs"));
 });

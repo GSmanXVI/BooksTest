@@ -9,18 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var BookListComponent = (function () {
-    function BookListComponent() {
+var router_1 = require('@angular/router');
+var BookAppComponent = (function () {
+    function BookAppComponent() {
     }
-    BookListComponent = __decorate([
+    BookAppComponent = __decorate([
         core_1.Component({
-            selector: 'book-list',
-            templateUrl: 'app/components/book-list/book-list.component.html',
-            styleUrls: ['app/components/book-list/book-list.component.css']
+            selector: 'book-app',
+            templateUrl: 'app/components/book-app/book-app.component.html',
+            styleUrls: ['app/components/book-app/book-app.component.css'],
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [])
-    ], BookListComponent);
-    return BookListComponent;
+    ], BookAppComponent);
+    return BookAppComponent;
 }());
-exports.BookListComponent = BookListComponent;
-//# sourceMappingURL=book-list.component.js.map
+exports.BookAppComponent = BookAppComponent;
+//# sourceMappingURL=book-app.component.js.map

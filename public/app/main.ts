@@ -1,3 +1,7 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {BookListComponent} from './components/book-list/book-list.component';
-bootstrap(BookListComponent);
+import {BookAppComponent} from './components/book-app/book-app.component';
+import { appRouterProviders } from './app.routes';
+
+bootstrap(BookAppComponent, [
+    appRouterProviders
+]);
