@@ -5,15 +5,10 @@ import { BookListComponent } from './components/book-list/book-list.component';
 const routes: RouterConfig = [
     {
         path: '',
-        redirectTo: '/booklist',
-        pathMatch: 'full'
-    },
-    {
-        path: 'booklist',
         component: BookListComponent
     },
     {
-        path: 'book',
+        path: 'book/:id',
         component: BookComponent
     }
 ];

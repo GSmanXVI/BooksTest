@@ -32,8 +32,12 @@ gulp.task('libs', function () {
         'systemjs/dist/system.src.js',
         'rxjs/**/*.js',
         'rxjs/**/*.js.map',
+        'rxjs/bundles/Rx.min.js',
+        'rxjs/bundles/Rx.min.js.map',
         '@angular/**/*.js',
-        '@angular/**/*.js.map'
+        '@angular/**/*.js.map',
+        '@angular/**/index.js',
+        '@angular/**/index.js.map'
     ], { cwd: "node_modules/**" })
         .pipe(gulp.dest("./public/app/libs"));
 });

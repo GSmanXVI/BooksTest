@@ -1,1 +1,63 @@
-<h1>Book List</h1>
+<button>Добавить книгу</button>
+<div class="tabs">
+    <p [class.active]="true" (click)="changeTab('Name')">Название</p>
+    <p [class.active]="false" (click)="changeTab('Author')">Автор</p>
+    <p [class.active]="false" (click)="changeTab('Genre')">Жанр</p>
+</div>
+<div class="book-grid">
+    <div class="group">
+        <p class="group-name">Лавкрафт Г. Ф.</p>
+        <div class="books">
+            <div class="book" [routerLink]="['/book', 1]">
+                <img src="app/images/placeholder.png" alt="book">
+                <div class="data">
+                    <p class="data-name">Тень над Инсмутом</p>
+                    <p class="data-author">Лавкрафт Г. Ф.</p>
+                    <p class="data-year">1918</p>
+                    <p class="data-genre">Ужасы</p>
+                </div>
+            </div>
+            <div class="book" [routerLink]="['/book', 2]">
+                <img src="app/images/placeholder.png" alt="book">
+                <div class="data">
+                    <p class="data-name">Дагон</p>
+                    <p class="data-author">Лавкрафт Г. Ф.</p>
+                    <p class="data-year">1919</p>
+                    <p class="data-genre">Ужасы</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <p class="group-name">Кинг С.</p>
+        <div class="books">
+            <div class="book" [routerLink]="['/book', 3]">
+                <img src="app/images/placeholder.png" alt="book">
+                <div class="data">
+                    <p class="data-name">Побег из Шоушенка</p>
+                    <p class="data-author">Кинг С.</p>
+                    <p class="data-year">1988</p>
+                    <p class="data-genre">Драма</p>
+                </div>
+            </div>
+            <div class="book" [routerLink]="['/book', 4]">
+                <img src="app/images/placeholder.png" alt="book">
+                <div class="data">
+                    <p class="data-name">Керри</p>
+                    <p class="data-author">Кинг С.</p>
+                    <p class="data-year">1978</p>
+                    <p class="data-genre">Ужасы</p>
+                </div>
+            </div>
+            <div class="book" [routerLink]="['/book', 5]">
+                <img src="app/images/placeholder.png" alt="book">
+                <div class="data">
+                    <p class="data-name">Сияние</p>
+                    <p class="data-author">Кинг С.</p>
+                    <p class="data-year">1974</p>
+                    <p class="data-genre">Ужасы</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
