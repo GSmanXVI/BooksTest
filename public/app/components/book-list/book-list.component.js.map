@@ -1,0 +1,1 @@
+{"version":3,"file":"book-list.component.js","sourceRoot":"","sources":["book-list.component.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,qBAAwB,eAAe,CAAC,CAAA;AAOxC;IAAA;IAEA,CAAC;IAPD;QAAC,gBAAS,CAAC;YACT,QAAQ,EAAE,WAAW;YACrB,WAAW,EAAE,mDAAmD;YAChE,SAAS,EAAE,CAAC,kDAAkD,CAAC;SAChE,CAAC;;yBAAA;IAGF,wBAAC;AAAD,CAAC,AAFD,IAEC;AAFY,yBAAiB,oBAE7B,CAAA"}
