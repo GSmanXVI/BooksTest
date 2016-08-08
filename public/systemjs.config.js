@@ -3,15 +3,11 @@
     var map = {
         'app': 'app',
         '@angular': 'app/libs/@angular',
-        'rxjs': 'app/libs/rxjs'
     };
 
     var packages = {
         'app': {
             main: 'main.js',
-            defaultExtension: 'js'
-        },
-        'rxjs': {
             defaultExtension: 'js'
         }
     };
@@ -24,9 +20,7 @@
         '@angular/platform-browser',
         '@angular/platform-browser-dynamic',
         '@angular/router',
-        // '@angular/router-deprecated',
-        // '@angular/testing',
-        // '@angular/upgrade'
+        '@angular/forms'
     ];
 
     packageNames.forEach(function(pkgName) {

@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../models/book'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,40 +10,96 @@ System.register(['@angular/core', '../models/book'], function(exports_1, context
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, book_1;
+    var core_1, http_1, Observable_1;
     var BooksService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (book_1_1) {
-                book_1 = book_1_1;
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             BooksService = (function () {
-                function BooksService() {
+                function BooksService(http) {
+                    this.http = http;
                     this.apiUrl = 'api/books';
                 }
+                BooksService.prototype.jsonToUrlString = function (data) {
+                    var str = Object.keys(data).map(function (key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+                    }).join('&');
+                    return str;
+                };
                 BooksService.prototype.getBooks = function () {
+                    return this.http.get(this.apiUrl)
+                        .map(this.extractData);
                 };
                 BooksService.prototype.getBookById = function (id) {
-                    console.log(id);
-                    var book = new book_1.Book();
-                    book.name = "My First Book";
-                    book.author = "Skripnikov G.";
-                    book.year = 2016;
-                    book.genre = "Horror";
-                    book.info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n                     In placerat porttitor iaculis. Nulla aliquam suscipit\n                     magna sit amet facilisis. Nulla tempus massa elementum,\n                     volutpat enim at, commodo augue. In molestie felis vitae\n                     massa dictum venenatis. Cras ac nisl quam. Mauris id\n                     bibendum nisi, porta rutrum lectus. Donec mattis lacinia\n                     quam at euismod. Aliquam finibus dui sit amet maximus\n                     hendrerit. Cras lobortis massa quis nunc vulputate\n                     bibendum. Nam sit amet elementum sapien. Etiam fringilla\n                     lacinia orci ut condimentum. Quisque eget semper ante, ut\n                     interdum nunc. Donec auctor lectus quam, quis consectetur\n                     orci blandit et.";
-                    return book;
+                    return this.http.get(this.apiUrl + '/' + id)
+                        .map(this.extractData);
                 };
-                BooksService.prototype.addBook = function () {
+                BooksService.prototype.getGenres = function () {
+                    return this.http.get('api/genres')
+                        .map(this.extractData);
                 };
-                BooksService.prototype.editBook = function () {
+                BooksService.prototype.addBook = function (book) {
+                    var body = this.jsonToUrlString(book);
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    return this.http
+                        .post(this.apiUrl, body, { headers: headers });
+                };
+                BooksService.prototype.editBook = function (book, id) {
+                    var body = this.jsonToUrlString(book);
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    return this.http
+                        .put(this.apiUrl + '/' + id, body, { headers: headers });
+                };
+                BooksService.prototype.deleteBook = function (id) {
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    return this.http
+                        .delete(this.apiUrl + '/' + id, { headers: headers });
+                };
+                BooksService.prototype.uploadFile = function (file) {
+                    var _this = this;
+                    return new Promise(function (resolve, reject) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 200) {
+                                    resolve(xhr.response);
+                                }
+                                else {
+                                    reject(xhr.response);
+                                }
+                            }
+                        };
+                        xhr.open('POST', _this.apiUrl + '/upload', true);
+                        var formData = new FormData();
+                        formData.append("file", file, file.name);
+                        xhr.send(formData);
+                    });
+                };
+                BooksService.prototype.extractData = function (res) {
+                    var body = res.json();
+                    return body || {};
+                };
+                BooksService.prototype.handleError = function (error) {
+                    var errMsg = (error.message) ? error.message :
+                        error.status ? error.status + " - " + error.statusText : 'Server error';
+                    console.error(errMsg);
+                    return Observable_1.Observable.throw(errMsg);
                 };
                 BooksService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [http_1.Http])
                 ], BooksService);
                 return BooksService;
             }());

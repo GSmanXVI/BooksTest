@@ -30,8 +30,6 @@ gulp.task('libs', function () {
         'reflect-metadata/Reflect.js',
         'reflect-metadata/Reflect.js.map',
         'systemjs/dist/system.src.js',
-        'rxjs/**/*.js',
-        'rxjs/**/*.js.map',
         'rxjs/bundles/Rx.min.js',
         'rxjs/bundles/Rx.min.js.map',
         '@angular/**/*.js',

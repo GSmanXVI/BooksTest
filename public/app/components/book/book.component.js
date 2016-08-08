@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '../../services/books.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, books_service_1;
+    var core_1, router_1, router_2, books_service_1;
     var BookComponent;
     return {
         setters:[
@@ -19,6 +19,7 @@ System.register(['@angular/core', '@angular/router', '../../services/books.servi
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (books_service_1_1) {
                 books_service_1 = books_service_1_1;
@@ -28,29 +29,31 @@ System.register(['@angular/core', '@angular/router', '../../services/books.servi
                 function BookComponent(booksService, route) {
                     this.booksService = booksService;
                     this.route = route;
-                    this.isEdit = false;
                 }
                 BookComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.sub = this.route.params.subscribe(function (params) {
                         var id = params['id'];
-                        _this.book = _this.booksService.getBookById(id);
+                        _this.booksService.getBookById(id).subscribe(function (book) {
+                            _this.book = book;
+                            if (_this.book.image == 'null') {
+                                _this.book.image = 'app/images/placeholder.png';
+                            }
+                        });
                     });
                 };
                 BookComponent.prototype.ngOnDestroy = function () {
                     this.sub.unsubscribe();
                 };
-                BookComponent.prototype.edit = function () {
-                    this.isEdit = !this.isEdit;
-                };
-                BookComponent.prototype.save = function () {
-                    this.isEdit = false;
+                BookComponent.prototype.getImage = function () {
+                    return 'app/images/placeholder.png';
                 };
                 BookComponent = __decorate([
                     core_1.Component({
                         selector: 'book',
                         templateUrl: 'app/components/book/book.component.html',
-                        styleUrls: ['app/components/book/book.component.css']
+                        styleUrls: ['app/components/book/book.component.css'],
+                        directives: [router_2.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [books_service_1.BooksService, router_1.ActivatedRoute])
                 ], BookComponent);

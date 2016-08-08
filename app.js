@@ -4,8 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Sequelize = require('sequelize');
+var busboy = require('connect-busboy');
 
-var books = require('./routes/books');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -19,11 +21,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(busboy()); 
 
-app.use('/books', books);
+app.use('/api', api);
 
 app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '/public/index.html'));    
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.use(function(req, res, next) {

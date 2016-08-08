@@ -1,46 +1,92 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Book} from '../models/book';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class BooksService {
     private apiUrl: string;
 
-    constructor() {
+    constructor(private http: Http) {
         this.apiUrl = 'api/books'
     }
 
-    getBooks() {
+    jsonToUrlString(data: any) : string {
+        let str = Object.keys(data).map(function(key){
+            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+            }).join('&');
+        return str;
+    }
 
+    getBooks() {
+        return this.http.get(this.apiUrl)
+            .map(this.extractData);
     }
 
     getBookById(id: string) {
-        console.log(id);
-        let book = new Book();
-        book.name = "My First Book";
-        book.author = "Skripnikov G.";
-        book.year = 2016;
-        book.genre = "Horror";
-        book.info = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                     In placerat porttitor iaculis. Nulla aliquam suscipit
-                     magna sit amet facilisis. Nulla tempus massa elementum,
-                     volutpat enim at, commodo augue. In molestie felis vitae
-                     massa dictum venenatis. Cras ac nisl quam. Mauris id
-                     bibendum nisi, porta rutrum lectus. Donec mattis lacinia
-                     quam at euismod. Aliquam finibus dui sit amet maximus
-                     hendrerit. Cras lobortis massa quis nunc vulputate
-                     bibendum. Nam sit amet elementum sapien. Etiam fringilla
-                     lacinia orci ut condimentum. Quisque eget semper ante, ut
-                     interdum nunc. Donec auctor lectus quam, quis consectetur
-                     orci blandit et.`
-        return book;
+        return this.http.get(this.apiUrl + '/' + id)
+            .map(this.extractData);
     }
 
-    addBook() {
-
+    getGenres() {
+        return this.http.get('api/genres')
+            .map(this.extractData);
     }
 
-    editBook() {
+    addBook(book: Book) {
+        let body = this.jsonToUrlString(book);
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http
+            .post(this.apiUrl, body, { headers: headers });
+    }
 
+    editBook(book: Book, id: string) {
+        let body = this.jsonToUrlString(book);
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http
+            .put(this.apiUrl + '/' + id, body, { headers: headers });
+    }
+
+    deleteBook(id: string) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http
+            .delete(this.apiUrl + '/' + id, { headers: headers });
+    }
+
+    uploadFile(file:File):Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            };
+
+            xhr.open('POST', this.apiUrl + '/upload', true);
+
+            let formData = new FormData();
+            formData.append("file", file, file.name);
+            xhr.send(formData);
+        });
+    }
+
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || { };
+    }
+
+    private handleError (error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 }

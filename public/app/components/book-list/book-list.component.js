@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '../../directives/responsive-img.directive'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../../services/books.service', '../../pipes/books-sort.pipe'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '../../directives/responsiv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, responsive_img_directive_1;
+    var core_1, router_1, books_service_1, books_sort_pipe_1;
     var BookListComponent;
     return {
         setters:[
@@ -20,24 +20,48 @@ System.register(['@angular/core', '@angular/router', '../../directives/responsiv
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (responsive_img_directive_1_1) {
-                responsive_img_directive_1 = responsive_img_directive_1_1;
+            function (books_service_1_1) {
+                books_service_1 = books_service_1_1;
+            },
+            function (books_sort_pipe_1_1) {
+                books_sort_pipe_1 = books_sort_pipe_1_1;
             }],
         execute: function() {
             BookListComponent = (function () {
-                function BookListComponent() {
+                function BookListComponent(booksService) {
+                    this.booksService = booksService;
+                    this.tab = 'author';
                 }
-                BookListComponent.prototype.changeTab = function (str) {
-                    console.log(str);
+                BookListComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.booksService.getBooks().subscribe(function (books) {
+                        _this.books = books;
+                        for (var _i = 0, _a = _this.books; _i < _a.length; _i++) {
+                            var book = _a[_i];
+                            if (book.image == 'null') {
+                                book.image = 'app/images/placeholder.png';
+                            }
+                        }
+                    });
+                };
+                BookListComponent.prototype.getImage = function (id) {
+                    return 'app/images/placeholder.png';
+                };
+                BookListComponent.prototype.changeTab = function (tab) {
+                    this.tab = tab;
+                };
+                BookListComponent.prototype.isActive = function (tab) {
+                    return this.tab == tab;
                 };
                 BookListComponent = __decorate([
                     core_1.Component({
                         selector: 'book-list',
                         templateUrl: 'app/components/book-list/book-list.component.html',
                         styleUrls: ['app/components/book-list/book-list.component.css'],
-                        directives: [router_1.ROUTER_DIRECTIVES, responsive_img_directive_1.ResponsiveImgDirective]
+                        directives: [router_1.ROUTER_DIRECTIVES],
+                        pipes: [books_sort_pipe_1.SortByFieldPipe, books_sort_pipe_1.GetFieldPipe]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [books_service_1.BooksService])
                 ], BookListComponent);
                 return BookListComponent;
             }());

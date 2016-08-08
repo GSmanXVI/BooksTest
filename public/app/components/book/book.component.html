@@ -1,40 +1,14 @@
-<form>
-    <div *ngIf="book" class="book">
-        <div class="image">
-            <img src="app/images/placeholder.png" alt="book">
-        </div>
-        <div class="data">
-            <div class="name">
-                <p *ngIf="!isEdit" class="data-text">{{book.name}}</p>
-                <input *ngIf="isEdit" type="text" value="{{book.name}}">
-                <p class="error">Вы ввели некорректное название книги.</p>
-            </div>
-            <div class="author">
-                <p *ngIf="!isEdit" class="data-text">{{book.author}}</p>
-                <input *ngIf="isEdit" type="text" value="{{book.author}}">
-                <p class="error">Вы ввели некорректное имя автора.</p>
-            </div>
-            <div class="year">
-                <p *ngIf="!isEdit" class="data-text">{{book.year}}</p>
-                <input *ngIf="isEdit" type="text" value="{{book.year}}">
-                <p class="error">Вы ввели некорректный год.</p>
-            </div>
-            <div class="genre">
-                <p *ngIf="!isEdit" class="data-text">{{book.genre}}</p>
-                <input *ngIf="isEdit" type="text" value="{{book.genre}}">
-                <p class="error">Вы не выбрали жанр.</p>
-            </div>
-            <div *ngIf="isEdit" class="img-upload">
-                <input type="file" name="name" value="Выберите обложку">
-                <p class="error">Размер картинки не должен привышать 1мб.</p>
-            </div>
-        </div>
-        <div class="info">
-            <p *ngIf="!isEdit">{{book.info}}</p>
-            <textarea *ngIf="isEdit" name="name" rows="8" cols="40">{{book.info}}</textarea>
-            <p class="error">Размер описания не должен привышать 1000 символов.</p>
-        </div>
+<div *ngIf="book" class="book">
+    <div class="image">
+        <img [src]="book.image" alt="book">
     </div>
-    <button (click)="edit()" [innerHtml]="isEdit ? 'Отмена' : 'Редактировать'"></button>
-    <button *ngIf="isEdit" (click)="save()">Сохранить</button>
-</form>
+    <div class="data">
+        <p class="name">{{book.name}}</p>
+        <p class="author">{{book.author}}</p>
+        <p class="year">{{book.year}}</p>
+        <p class="genre">{{book.genre}}</p>
+    </div>
+    <pre class="info">{{book.info}}</pre>
+    <button [routerLink]="['/books']">Назад</button>
+    <button [routerLink]="['/books', book.id, 'edit']">Редактировать</button>
+</div>
