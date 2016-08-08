@@ -1,21 +1,21 @@
 {
     "development": {
-        "username": "admin",
-        "password": "YES",
+        "username": "root",
+        "password": "",
         "database": "book_test",
         "host": "localhost",
         "dialect": "mysql"
     },
     "test": {
         "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
+        "password": "",
+        "database": "book_test",
+        "host": "localhost",
         "dialect": "mysql"
     },
     "production": {
-        "username": "admin",
-        "password": "YES",
+        "username": "root",
+        "password": "",
         "database": "book_test",
         "host": "localhost",
         "dialect": "mysql"

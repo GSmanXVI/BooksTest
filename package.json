@@ -44,6 +44,7 @@
     "connect-history-api-fallback": "^1.2.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^2.3.2",
+    "systemjs-builder": "^0.15.26",
     "typescript": "^1.8.10",
     "typings": "^1.0.4"
   }
